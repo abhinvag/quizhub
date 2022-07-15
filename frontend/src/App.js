@@ -1,4 +1,4 @@
-import "../styles/App.css";
+import "./css/main.css";
 import {
   BrowserRouter as Router,
   Route,
@@ -6,7 +6,7 @@ import {
   Switch,
 } from "react-router-dom";
 
-import HomePage from "../pages/HomePage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
