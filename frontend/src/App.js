@@ -7,7 +7,9 @@ import {
 } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
+import Admin from "./pages/Admin";
 import Header from "./components/Header";
+import CreateQuiz from "./pages/CreateQuiz";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Header />
         <Switch>
           <Route path="/" exact component={HomePage} />
+          <Route path="/admin" component={Admin} />
+          <Route path="/createquiz" component={CreateQuiz} />
           <Redirect to="/" />
         </Switch>
       </Router>

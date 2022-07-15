@@ -1,3 +1,63 @@
+.home-action-div {
+  width: 70%;
+  text-align: center;
+}
+.home-action-div-input {
+  margin-bottom: 2%;
+}
+
+.admin-action-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 50%;
+  height: 30%;
+}
+
+.createquiz {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+.createquiz-heading {
+  margin: 2% auto;
+  color: #6C63FF;
+}
+.createquiz-action-div {
+  width: 90%;
+}
+.createquiz-details {
+  margin-bottom: 2%;
+}
+.createquiz-details-form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 1%;
+}
+
 .App {
   margin: 0;
   padding: 0;
@@ -16,4 +76,136 @@ a {
 a:hover {
   text-decoration: none;
   color: inherit;
+}
+
+textarea:focus,
+input:focus {
+  border-color: #6C63FF !important;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #6C63FF !important;
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #6C63FF !important;
+  outline: 0 none;
+}
+
+.make-white {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 30px;
+}
+
+.customButton {
+  background-color: #6C63FF !important;
+  border-color: #6C63FF !important;
+  color: #fff !important;
+}
+.customButton:visited {
+  background-color: #6C63FF !important;
+  border-color: #6C63FF !important;
+  color: #fff !important;
+}
+.customButton:focus {
+  background-color: #6C63FF !important;
+  border-color: #6C63FF !important;
+  color: #fff !important;
+}
+.customButton:hover {
+  background-color: #5950fc !important;
+  border-color: #6C63FF !important;
+  color: #fff !important;
+}
+.customButton:active {
+  background-color: #6C63FF !important;
+  border-color: #6C63FF !important;
+  color: #fff !important;
+}
+.customButton-outline {
+  background-color: transparent !important;
+  border-color: #6C63FF !important;
+  color: #6C63FF !important;
+}
+.customButton-outline:visited {
+  background-color: transparent !important;
+  border-color: #6C63FF !important;
+  color: #6C63FF !important;
+}
+.customButton-outline:focus {
+  background-color: transparent !important;
+  border-color: #6C63FF !important;
+  color: #6C63FF !important;
+}
+.customButton-outline:hover {
+  background-color: #6C63FF !important;
+  border-color: #6C63FF !important;
+  color: #fff !important;
+}
+.customButton-outline:active {
+  background-color: transparent !important;
+  border-color: #6C63FF !important;
+  color: #6C63FF !important;
+}
+.customButton-white {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #6C63FF !important;
+}
+.customButton-white:visited {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #6C63FF !important;
+}
+.customButton-white:focus {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #6C63FF !important;
+}
+.customButton-white:hover {
+  background-color: rgba(255, 255, 255, 0.932) !important;
+  border-color: #fff !important;
+  color: #5950fc !important;
+}
+.customButton-white:active {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #6C63FF !important;
+}
+
+.partition-container {
+  min-height: 92%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+.partition-container-left, .partition-container-right {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.partition-container-left-img, .partition-container-right-img {
+  width: 500px;
+}
+
+.header {
+  background-color: #6C63FF !important;
+  height: 8% !important;
+}
+.header-brand {
+  color: #fff;
+  font-size: 1.5rem;
+}
+.header-brand:hover {
+  color: #fff;
 }

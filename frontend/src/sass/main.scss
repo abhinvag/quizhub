@@ -1,6 +1,12 @@
 @import "abstracts/variables";
 
 @import "pages/home";
+@import "pages/admin";
+@import "pages/createquiz";
 
 @import "utils/App";
 @import "utils/index";
+@import "utils/buttons";
+@import "utils/layout";
+
+@import "components/header"

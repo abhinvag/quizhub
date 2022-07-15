@@ -1,0 +1,34 @@
+.createquiz{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    &-heading{
+        margin: 2% auto;
+        color: $primary-color-dark;
+    }
+
+    &-action-div{
+        width: 90%;
+    }
+
+    &-details{
+
+        margin-bottom: 2%;
+
+        &-form{
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 1%;
+        }
+
+        // &-inputs{
+        //     // width: 40%;
+        //     // margin-bottom: 1% ;
+        // }
+    }
+}
