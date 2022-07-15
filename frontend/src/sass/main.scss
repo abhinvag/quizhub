@@ -1,4 +1,6 @@
-@import "pages/home.scss";
+@import "abstracts/variables";
 
-@import "utils/App.scss";
-@import "utils/index.scss";
+@import "pages/home";
+
+@import "utils/App";
+@import "utils/index";
