@@ -10,7 +10,7 @@ function Header() {
 
     useEffect(() => {
         let user = localStorage.getItem("user");
-        if(user){
+        if(user != undefined && user != null){
             user = JSON.parse(user);
             const now = Date.now();
             if(now > user.stsTokenManager.expirationTime){

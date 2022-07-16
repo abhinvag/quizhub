@@ -1,0 +1,27 @@
+.question{
+    margin-top: 5%;
+    width: 100;
+
+    &-title{
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    &-content{
+        font-size: 1.3rem;
+        text-align: center;
+        color: rgb(99, 99, 99);
+    }
+
+    &-marks{
+        font-size: 1rem;
+        color: gray;
+        text-align: right;
+    }
+
+    &-options{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}

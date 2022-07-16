@@ -1,7 +1,13 @@
-import React, {useState} from 'react'
-import {Button, Form} from "react-bootstrap";
+import React, {useState, useEffect} from 'react'
+import {Button} from "react-bootstrap";
+import NewQuizDetails from '../components/NewQuizDetails';
+import NewQuizQuestions from '../components/NewQuizQuestions';
+import {BiRocket} from "react-icons/bi"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import {nanoid} from "nanoid";
 
-function CreateQuiz() {
+function CreateQuiz({}) {
 
     const [quizDetails, setQuizDetails] = useState({
         "quizName": "",
@@ -14,145 +20,81 @@ function CreateQuiz() {
         "invitedEmails": ""
     })
 
-    const updateQuizDetails = (event) => {
-        const {name, value} = event.target;
-        setQuizDetails(prevValue => {
-            return {
-                ...prevValue,
-                [name]: value
-            }
-        })
-    }
+    const [quizQuestions, setQuizQuestions] = useState({})
+    
+    useEffect(() => {
+        const strigifiedNewQuiz = localStorage.getItem("newQuiz");
+        if(strigifiedNewQuiz != undefined || strigifiedNewQuiz != null){
+            const newQuiz = JSON.parse(strigifiedNewQuiz);
+            setQuizDetails(newQuiz.quizDetails)
+            setQuizQuestions(newQuiz.quizQuestions)
+        }
+    }, [])
+
+    useEffect(() => {
+        const newQuiz = {
+            quizDetails,
+            quizQuestions
+        }
+        localStorage.setItem("newQuiz", JSON.stringify(newQuiz))
+    }, [quizDetails, quizQuestions])
 
     const handleQuizCreate = () => {
-        console.log(quizDetails);
-    }
+        if( quizDetails.quizName == "" || 
+            quizDetails.startDate == "" || 
+            quizDetails.startTime == "" || 
+            quizDetails.endDate == "" ||
+            quizDetails.endTime == ""
+        ){
+            toast.error("Mandatory Fields Empty !!");
+        }
+        else{
+            var temp = quizDetails.duration.split(":")
+            if(temp.length < 3 || temp[0].length != 2 || temp[2].length != 2 || temp[2].length != 2){
+                toast.error("Duration Format Incorrect !!")
+            }
+            else{
+                const id = nanoid();
+                const inviteLink = `http://loclahost:3000/quiz/${id}`
+                let newQuiz = {
+                    id,
+                    quizDetails,
+                    quizQuestions
+                }
+                if(newQuiz.quizDetails.inviteOnly){
+                    newQuiz.quizDetails.invitedEmails = newQuiz.quizDetails.invitedEmails.split(" ");
+                }
+                navigator.clipboard.writeText(inviteLink);
+                toast.success("Invite Link Copied To Clipboard !")
+                console.log(newQuiz);
 
-    const [quizQuestions, setQuizQuestions] = useState([
-        {
-            "id": "",
-            "title": "",
-            "marks": "",
-            "options": [
-                {
-                    "id": "",
-                    "title": ""
-                },
-            ],
-            "correctOptionId": ""
-        },
-    ])
+                //TODO: Send Quiz to Backend
+
+                localStorage.removeItem("newQuiz");
+            }
+        }
+    }
 
     return (
         <div className='createquiz'>
             <h1 className='createquiz-heading'>Create Quiz</h1>
             <div className='createquiz-action-div make-white'>
-                <div className='createquiz-details'>
-                    <div className='createquiz-details-form'>
-                        <Form.Group>
-                            <Form.Label>Quiz Name</Form.Label>
-                            <Form.Control
-                                className='createquiz-details-inputs'
-                                placeholder='Quiz Name'
-                                name="quizName"
-                                value={quizDetails.quizName}
-                                onChange={updateQuizDetails}
-                                type="text"
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Start Date</Form.Label>
-                            <Form.Control
-                                className='createquiz-details-inputs'
-                                placeholder='Start Date'
-                                name="startDate"
-                                value={quizDetails.startDate}
-                                onChange={updateQuizDetails}
-                                type="date"
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Start Time</Form.Label>
-                            <Form.Control
-                                className='createquiz-details-inputs'
-                                placeholder='Start Time'
-                                name="startTime"
-                                value={quizDetails.startTime}
-                                onChange={updateQuizDetails}
-                                type="time"
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>End Date</Form.Label>
-                            <Form.Control
-                                className='createquiz-details-inputs'
-                                placeholder='End Date'
-                                name="endDate"
-                                value={quizDetails.endDate}
-                                onChange={updateQuizDetails}
-                                type="date"
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>End Time</Form.Label>
-                            <Form.Control
-                                className='createquiz-details-inputs'
-                                placeholder='End Time'
-                                name="endTime"
-                                value={quizDetails.endTime}
-                                onChange={updateQuizDetails}
-                                type="time"
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Quiz Duration (hh:mm:ss)</Form.Label>
-                            <Form.Control
-                                className='createquiz-details-inputs'
-                                placeholder='Quiz Duration'
-                                type="text"
-                                pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" 
-                                onChange={updateQuizDetails}
-                                name="duration"
-                                value={quizDetails.duration}
-                                required
-                            />
-                        </Form.Group>
-                    </div>
-                    <Form.Check 
-                        type="switch"
-                        label="Make Quiz Invite Only"
-                        style={{"marginBottom": "1%"}}
-                        name="inviteOnly"
-                        value={quizDetails.inviteOnly}
-                        onChange={(event) => {
-                            setQuizDetails(prevValue => {
-                                return {
-                                    ...prevValue,
-                                    ["inviteOnly"]: event.target.checked
-                                }
-                            })
-                        }}
-                    />
-                    {quizDetails.inviteOnly && (
-                        <Form.Control 
-                            as="textarea"
-                            placeholder='Enter Allowed Emails (Space Sperated)'
-                            name="invitedEmails"
-                            value={quizDetails.invitedEmails}
-                            onChange={updateQuizDetails}
-                        />
-                    )}
-                </div>
-                <div className='createquiz-questions'>
-
-                </div>
+                <NewQuizDetails 
+                    quizDetails={quizDetails}
+                    setQuizDetails={setQuizDetails}
+                />
+                <NewQuizQuestions 
+                    quizQuestions={quizQuestions}
+                    setQuizQuestions={setQuizQuestions}
+                />
                 <Button
-                    className="customButton"
+                    className="customButton createquiz-button"
                     onClick={() => handleQuizCreate()}
                 >
-                    Create
+                    Create <BiRocket />
                 </Button>
             </div>
+            <ToastContainer />
         </div>
     )
 

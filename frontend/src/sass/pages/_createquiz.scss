@@ -12,6 +12,7 @@
 
     &-action-div{
         width: 90%;
+        position: relative;
     }
 
     &-details{
@@ -30,5 +31,50 @@
         //     // width: 40%;
         //     // margin-bottom: 1% ;
         // }
+    }
+
+    &-questions{
+        width: 50%;
+        margin: auto;
+
+        &-top{
+
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2%;
+
+            &-heading{
+                color: $primary-color-dark;
+            }
+
+        }
+
+        &-length0{
+            color: gray;
+        }
+
+        &-inputs{
+            margin-bottom: 2%;
+        }
+
+        &-options{
+            width: 60%;
+
+            &-option{
+                display: grid;
+                grid-template-columns: 7fr 1fr;
+                gap: 10px;
+            }
+        }
+
+        &-button{
+            margin-bottom: 2%;
+        }
+    }
+
+    &-button{
+        position: absolute;
+        right: 5%;
+        bottom: 1%;
     }
 }

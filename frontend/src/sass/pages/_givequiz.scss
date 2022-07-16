@@ -1,0 +1,23 @@
+.givequiz{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 92%;
+
+    &-end{
+        width: 40%;
+        text-align: center;
+        & h4{
+            color: $primary-color-dark;
+        }
+    }
+
+    &-questions{
+        width: 50%;
+    }
+
+    &-finishButton{
+        margin-top: 2%;
+    }
+}

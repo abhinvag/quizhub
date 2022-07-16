@@ -10,6 +10,8 @@ import HomePage from "./pages/HomePage";
 import Admin from "./pages/Admin";
 import Header from "./components/Header";
 import CreateQuiz from "./pages/CreateQuiz";
+import Quiz from "./pages/Quiz";
+import GiveQuiz from "./pages/GiveQuiz";
 
 function App() {
   return (
@@ -19,7 +21,9 @@ function App() {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/admin" component={Admin} />
+          <Route path="/quiz/:id" component={Quiz} />
           <Route path="/createquiz" component={CreateQuiz} />
+          <Route path="/givequiz" component={GiveQuiz} />
           <Redirect to="/" />
         </Switch>
       </Router>

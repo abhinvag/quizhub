@@ -1,0 +1,21 @@
+.quiz{
+
+    height: 92%;
+
+    &-layout{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    &-willstart{
+        text-align: center;
+        & h4{
+            color: $primary-color-dark;
+        }
+        width: 50%;
+    }
+    &-inputs{
+        margin-bottom: 4%;
+    }
+}

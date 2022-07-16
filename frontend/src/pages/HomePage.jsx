@@ -6,6 +6,10 @@ function HomePage() {
 
   const [quizCode, setQuizCode] = useState("");
 
+  const handleClick = () => {
+      //TODO: fetch quiz details from backend;
+  }
+
   return (
     <div className='partition-container'>
       <div className='partition-container-left'>

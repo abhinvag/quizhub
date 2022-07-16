@@ -3,10 +3,13 @@
 @import "pages/home";
 @import "pages/admin";
 @import "pages/createquiz";
+@import "pages/quiz";
+@import "pages/givequiz";
 
 @import "utils/App";
 @import "utils/index";
 @import "utils/buttons";
 @import "utils/layout";
 
-@import "components/header"
+@import "components/header";
+@import "components/question"
