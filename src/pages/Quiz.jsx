@@ -34,7 +34,7 @@ function Quiz(props) {
 
         async function fetchData(){
             try{
-                let res = await axios.post(`http://quizhub-api.herokuapp.com/questions`, {
+                let res = await axios.post(`https://quizhub-api.herokuapp.com/questions`, {
                     quiz_id: props.match.params.id
                 })
                 console.log(res.data);
