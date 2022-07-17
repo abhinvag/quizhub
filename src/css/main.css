@@ -186,12 +186,24 @@
           justify-content: space-evenly;
   cursor: pointer;
 }
-.history-list-quiz div {
+.history-list-quiz-1, .history-list-quiz-2 {
   padding: 2%;
   border-radius: 10px;
 }
-.history-list-quiz div:hover {
+.history-list-quiz-1:hover, .history-list-quiz-2:hover {
   background-color: rgb(241, 237, 237);
+}
+.history-list-quiz-1 {
+  width: 20%;
+  overflow: auto;
+}
+.history-list-quiz-2 {
+  width: 60%;
+}
+.history-list-quiz-3 {
+  padding: 2%;
+  border-radius: 10px;
+  width: 20%;
 }
 
 .App {

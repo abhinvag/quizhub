@@ -58,7 +58,8 @@ function Question({id, question}) {
         quiz_id: quiz.id,
         question_id: id,
         player_id: user.id,
-        option_id: option_id
+        option_id: option_id,
+        player_name:user.name
       }
       console.log(obj);
       const res = await axios.post("https://quizhub-api.herokuapp.com/check", obj) 

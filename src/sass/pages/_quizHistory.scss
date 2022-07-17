@@ -17,12 +17,24 @@
             flex-direction: row;
             justify-content: space-evenly;
             cursor: pointer;
-            & div{
+            &-1,&-2{
                 padding: 2%;
                 border-radius: 10px;
                 &:hover{
                     background-color: rgb(241, 237, 237);
                 }
+            }
+            &-1{
+                width: 20%;
+                overflow: auto;
+            }
+            &-2{
+                width: 60%;
+            }
+            &-3{
+                padding: 2%;
+                border-radius: 10px;
+                width: 20%;
             }
         }
     }

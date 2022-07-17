@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import PastQuizDetails from '../components/PastQuizDetails';
+import {Button} from "react-bootstrap"
 
 function QuizHistory() {
     
@@ -13,7 +14,7 @@ function QuizHistory() {
     const [adminData, setAdminData] = useState({
         name: "",
         email:"",
-        quizzes: {}
+        quiz_info: {}
     });
     const [loading, setLoading] = useState(true)
     const [showPast, setShowPast] = useState(false);
@@ -54,6 +55,22 @@ function QuizHistory() {
             />
         )
     }
+
+    const endQuiz = async (id) => {
+        try {
+            const date = new Date()
+            const obj = {
+                quiz_id:id,
+                endDate: date.getHours() + ":" + date.getMinutes(),
+                endTime: date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
+            }
+            console.log(obj);
+            const res = await axios.post("https://quizhub-api.herokuapp.com/updateEndTime", obj);
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
     return (
         <div className='history'>
@@ -63,15 +80,16 @@ function QuizHistory() {
                     <Skeleton count={10} /> 
                 ):(
                     <>
-                        {Object.keys(adminData.quizzes).map((key, index) => (
+                        {Object.keys(adminData.quiz_info).map((key, index) => (
                             <div className='history-list-quiz'>
                                 <div 
                                     onClick={() => {
                                         setPastQuizData(key);
                                         setShowPast(true);
                                     }}
+                                    className='history-list-quiz-1'
                                 >
-                                    Name: {adminData.quizzes[key]} 
+                                    {adminData.quiz_info[key].quizName} 
                                 </div>
                                 <div
                                     onClick={() => {
@@ -79,8 +97,28 @@ function QuizHistory() {
                                         navigator.clipboard.writeText(inviteLink);
                                         toast.success("Invite Link Copied To Clipboard !")
                                     }}
+                                    className='history-list-quiz-2'
                                 >
-                                    Code: {key}
+                                    {key}
+                                </div>
+                                <div className='history-list-quiz-3'>
+                                    {(Date.parse(adminData.quiz_info[key].endDate + " " + adminData.quiz_info[key].endTime) > Date.now())? (
+                                        <Button
+                                            className="customButton-outline"
+                                            onClick={() => {
+                                                endQuiz(key);
+                                            }}
+                                        >
+                                            End Quiz
+                                        </Button>
+                                    ):(
+                                        <Button
+                                            className="customButton-outline"
+                                            disabled
+                                        >
+                                            Quiz Ended
+                                        </Button>
+                                    )}
                                 </div>
                             </div>
                         ))}
