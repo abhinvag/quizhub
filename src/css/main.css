@@ -6,6 +6,9 @@
   margin-bottom: 2%;
 }
 
+.admin {
+  height: 92%;
+}
 .admin-action-div {
   display: -webkit-box;
   display: -ms-flexbox;

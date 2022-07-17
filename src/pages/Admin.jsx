@@ -1,12 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import admin from "../assets/admin.svg"
 import {Button} from "react-bootstrap"
-import {Link} from "react-router-dom"
+import {Link, Redirect} from "react-router-dom"
 
 function Admin() {
 
+  const [redirect, setRedirect] = useState(false);
+
+  if(redirect){
+    return <Redirect to="/" />
+  }
+
   return (
-    <div className='partition-container'>
+    <div className='admin partition-container'>
       <div className='partition-container-left'>
         <div className='admin-action-div make-white'>
             <Link to="/createquiz">
@@ -23,6 +29,15 @@ function Admin() {
                   See Previous Quizes 
               </Button>
             </Link>
+            <Button
+                className='customButton'
+                onClick={() => {
+                  localStorage.removeItem("user");
+                  setRedirect(true);
+                }}
+            >
+                Logout
+            </Button>
         </div>
       </div>
       <div className='partition-container-right'>

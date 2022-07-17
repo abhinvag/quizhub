@@ -11,7 +11,6 @@ function Header() {
 
     useEffect(() => {
         let user = localStorage.getItem("user");
-        console.log(user);
         if(user != "undefined" && user != null){
             user = JSON.parse(user);
             const now = Date.now();
@@ -24,7 +23,6 @@ function Header() {
 
     const handleLogin = async () => {
         let user = localStorage.getItem("user");
-        console.log(user);
         if(user != "undefined" && user != null){
             user = JSON.parse(user);
             const now = Date.now();
@@ -33,19 +31,21 @@ function Header() {
                 setRedirect(true);
             }
             else{
-                const user = await signInWithGoogle();
-                localStorage.setItem("user", JSON.stringify(user));
                 try {
+                    const user = await signInWithGoogle();
+                    localStorage.setItem("user", JSON.stringify(user));
                     const data = await axios.post("https://quizhub-api.herokuapp.com/signup",{
                         user_id: user.uid,
                         name: user.displayName,
                         email:user.email
                     })
                     console.log(data);
+                    console.log(user.uid)
                 } catch (error) {
                     console.log(error);
                 }
-                setRedirect(true);
+                console.log(user);
+                if(user.uid !== undefined) setRedirect(true);
             }
         }
         else{

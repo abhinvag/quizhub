@@ -65,7 +65,7 @@ function CreateQuiz(props) {
                 else{
                     const id = nanoid();
                     
-                    const inviteLink = `http://localhost:3000/quiz/${id}`
+                    const inviteLink = `${process.env.REACT_APP_BASE_URL}/quiz/${id}`
                     
                     let newQuiz = {
                         admin_id:JSON.parse(user).uid,

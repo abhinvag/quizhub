@@ -75,7 +75,7 @@ function QuizHistory() {
                                 </div>
                                 <div
                                     onClick={() => {
-                                        const inviteLink = `http://localhost:3000/quiz/${key}`
+                                        const inviteLink = `${process.env.REACT_APP_BASE_URL}/quiz/${key}`
                                         navigator.clipboard.writeText(inviteLink);
                                         toast.success("Invite Link Copied To Clipboard !")
                                     }}
