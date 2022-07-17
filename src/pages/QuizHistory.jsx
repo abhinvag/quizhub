@@ -61,8 +61,8 @@ function QuizHistory() {
             const date = new Date()
             const obj = {
                 quiz_id:id,
-                endDate: date.getHours() + ":" + date.getMinutes(),
-                endTime: date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
+                endTime: date.getHours() + ":" + date.getMinutes(),
+                endDate: date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
             }
             console.log(obj);
             const res = await axios.post("https://quizhub-api.herokuapp.com/updateEndTime", obj);
