@@ -1,0 +1,30 @@
+.history{
+    min-height: 92%;
+    margin-top: 2%;
+    text-align: center;
+
+    &-heading{
+        color: $primary-color-dark;
+    }
+
+    &-list{
+        font-size: 1.3rem;
+        margin: 3% auto;
+        width: 50%;
+
+        &-quiz{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            cursor: pointer;
+            & div{
+                padding: 2%;
+                border-radius: 10px;
+                &:hover{
+                    background-color: rgb(241, 237, 237);
+                }
+            }
+        }
+    }
+
+}

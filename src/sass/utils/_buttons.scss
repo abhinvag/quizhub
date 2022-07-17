@@ -1,0 +1,90 @@
+.customButton {
+    
+    background-color: $primary-color-dark !important;
+    border-color: $primary-color-dark !important;
+    color: #fff !important;
+
+    &:visited{
+        background-color: $primary-color-dark !important;
+        border-color: $primary-color-dark !important;
+        color: #fff !important;
+    }
+
+    &:focus{
+        background-color: $primary-color-dark !important;
+        border-color: $primary-color-dark !important;
+        color: #fff !important;
+    }
+
+    &:hover{
+        background-color: $primary-color-dark2 !important;
+        border-color: $primary-color-dark !important;
+        color: #fff !important;
+    }
+
+    &:active{
+        background-color: $primary-color-dark !important;
+        border-color: $primary-color-dark !important;
+        color: #fff !important;
+    }
+
+    &-outline{
+        background-color: transparent !important;
+        border-color: $primary-color-dark !important;
+        color: $primary-color-dark !important;
+
+        &:visited{
+            background-color: transparent !important;
+            border-color: $primary-color-dark !important;
+            color: $primary-color-dark !important;
+        }
+
+        &:focus{
+            background-color: transparent !important;
+            border-color: $primary-color-dark !important;
+            color: $primary-color-dark !important;
+        }
+
+        &:hover{
+            background-color: $primary-color-dark !important;
+            border-color: $primary-color-dark !important;
+            color: #fff !important;
+        }
+
+        &:active{
+            background-color: transparent !important;
+            border-color: $primary-color-dark !important;
+            color: $primary-color-dark !important;
+        }
+    }
+
+    &-white{
+        background-color: #fff !important;
+        border-color: #fff !important;
+        color: $primary-color-dark !important;
+
+        &:visited{
+            background-color: #fff !important;
+            border-color: #fff !important;
+            color: $primary-color-dark !important;
+        }
+
+        &:focus{
+            background-color: #fff !important;
+            border-color: #fff !important;
+            color: $primary-color-dark !important;
+        }
+
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.932) !important;
+            border-color: #fff !important;
+            color: $primary-color-dark2 !important;
+        }
+
+        &:active{
+            background-color: #fff !important;
+            border-color: #fff !important;
+            color: $primary-color-dark !important;
+        }
+    }
+}
