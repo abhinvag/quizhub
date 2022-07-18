@@ -4,6 +4,7 @@ import home from "../assets/home.svg"
 import {Redirect} from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import Header from '../components/Header';
 
 function HomePage() {
 
@@ -22,30 +23,33 @@ function HomePage() {
   }
 
   return (
-    <div className='partition-container'>
-      <div className='partition-container-left'>
-        <img  alt='home' className="partition-container-left-img" src={home} />
-      </div>
-      <div className='partition-container-right'>
-        <div className='make-white home-action-div'>
-          <Form.Control
-            placeholder="Enter Quiz Code"
-            value={quizCode}
-            onChange={(event) => {
-              setQuizCode(event.target.value);
-            }}
-            className="home-action-div-input"
-          />
-          <Button
-            className='customButton'
-            onClick={() => handleClick()}
-          >
-            Join Quiz
-          </Button>
+    <>
+      <Header />
+        <div className='partition-container'>
+        <div className='partition-container-left'>
+          <img  alt='home' className="partition-container-left-img" src={home} />
         </div>
+        <div className='partition-container-right'>
+          <div className='make-white home-action-div'>
+            <Form.Control
+              placeholder="Enter Quiz Code"
+              value={quizCode}
+              onChange={(event) => {
+                setQuizCode(event.target.value);
+              }}
+              className="home-action-div-input"
+            />
+            <Button
+              className='customButton'
+              onClick={() => handleClick()}
+            >
+              Join Quiz
+            </Button>
+          </div>
+        </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
-    </div>
+    </>
   )
 }
 

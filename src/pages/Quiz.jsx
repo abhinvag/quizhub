@@ -11,6 +11,7 @@ import {Redirect} from "react-router-dom";
 import axios from "axios";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import Header from '../components/Header';
 
 function Quiz(props) {
 
@@ -99,12 +100,17 @@ function Quiz(props) {
         let user = localStorage.getItem("quizgiver");
         if(user != undefined && user != null){
             user = JSON.parse(user);
-            if(user.quizid == quiz?.id){
+            console.log(user);
+            console.log(quiz.id);
+            console.log(user.prevQuizes[quiz.id]);
+            if(user.prevQuizes[quiz.id] != undefined){
+                console.log(user);
                 try {
                     const obj = {
-                        quiz_id: user.quizid,
+                        quiz_id: quiz.id,
                         player_id: user.id
                     }
+                    console.log(obj);
                     const res = await axios.post("https://quizhub-api.herokuapp.com/score", obj);
                     console.log(res.data);
                     if(res.data.success === true){
@@ -125,25 +131,28 @@ function Quiz(props) {
 
     const startHourRemaining =  parseInt((Date.parse(startTime)-Date.now())/(3600000))
     const startMinRemaining  = parseInt((Date.parse(startTime)-Date.now())/(1000*60))-(startHourRemaining*60);
-    const startSecondRemaining = parseInt(((Date.parse(startTime)-Date.now())/1000)-(startMinRemaining*60))
+    const startSecondRemaining = parseInt(((Date.parse(startTime)-Date.now())/1000)-(startHourRemaining*60*60 + startMinRemaining*60))
 
     const endHourRemaining =  parseInt((Date.parse(endTime)-Date.now())/(3600000))
     const endMinRemaining  = parseInt((Date.parse(endTime)-Date.now())/(1000*60))-(endHourRemaining*60);
-    const endSecondRemaining = parseInt(((Date.parse(endTime)-Date.now())/1000)-(endMinRemaining*60))
+    const endSecondRemaining = parseInt(((Date.parse(endTime)-Date.now())/1000)-(endHourRemaining*60*60 + endMinRemaining*60))
    
 
     if(loading){
         return (
-            <div className='quiz quiz-layout partition-container'>
-                <div className='partition-container-left'>
-                    <img  alt='wait' className="partition-container-left-img" src={wait} />
-                </div>
-                <div className='partition-container-right'>
-                    <div className='quiz-willstart make-white'>
-                        <Skeleton count={7} />
+            <>
+                <Header />
+                <div className='quiz quiz-layout partition-container'>
+                    <div className='partition-container-left'>
+                        <img  alt='wait' className="partition-container-left-img" src={wait} />
+                    </div>
+                    <div className='partition-container-right'>
+                        <div className='quiz-willstart make-white'>
+                            <Skeleton count={7} />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
 
@@ -153,87 +162,112 @@ function Quiz(props) {
 
         user = localStorage.getItem("quizgiver");
 
-        if(user != undefined && user != null){
+        if(user !== "undefined" && user !== null){
             user = JSON.parse(user);
             if(user.quizid != quiz.id){
-                const d = duration.split(":");
-                const dInMs = d[0]*3600000 + d[1]*60000 + d[2]*1000;
-                const quizEndTimeForUser = new Date(Math.min(Date.now()+dInMs, Date.parse(endTime)));
-                user = {
-                    id: nanoid(),
-                    name: userName,
-                    quizid: quiz.id,
-                    quizEndTimeForUser:quizEndTimeForUser
+                if(user.prevQuizes[quiz.id] != undefined){ // we have previous end time
+                    user = {
+                        id: user.id,
+                        name: userName,
+                        quizid: quiz.id,
+                        prevQuizes:user.prevQuizes,
+                        quizEndTimeForUser: user.prevQuizes[quiz.id]
+                    }
                 }
+                else{ // we do not have previous end time, calculating new 
+                    const d = duration.split(":");
+                    const dInMs = d[0]*3600000 + d[1]*60000 + d[2]*1000;
+                    const quizEndTimeForUser = new Date(Math.min(Date.now()+dInMs, Date.parse(endTime)));
+                    user.prevQuizes[quiz.id] = quizEndTimeForUser;
+                    user = {
+                        id: user.id,
+                        name: userName,
+                        quizid: quiz.id,
+                        prevQuizes:user.prevQuizes,
+                        quizEndTimeForUser:quizEndTimeForUser
+                    }
+                }
+                localStorage.setItem("quizgiver", JSON.stringify(user));
             }
         }
         else{
+            // we do not have any user info
             const d = duration.split(":");
             const dInMs = d[0]*3600000 + d[1]*60000 + d[2]*1000;
             const quizEndTimeForUser = new Date(Math.min(Date.now()+dInMs, Date.parse(endTime)));
+            let prevQuizes = {};
+            prevQuizes[quiz.id]=quizEndTimeForUser
             user = {
                 id: nanoid(),
                 name: userName,
                 quizid: quiz.id,
+                prevQuizes:prevQuizes,
                 quizEndTimeForUser:quizEndTimeForUser
             }
+            localStorage.setItem("quizgiver", JSON.stringify(user));
         }
-
-        localStorage.setItem("quizgiver", JSON.stringify(user));
 
         return <Redirect to="/givequiz" />
 
     }
     else if(Date.now() < Date.parse(startTime)){
         return (
-            <div className='quiz quiz-layout partition-container'>
-                <div className='partition-container-left'>
-                    <img  alt='wait' className="partition-container-left-img" src={wait} />
-                </div>
-                <div className='partition-container-right'>
-                    <div className='quiz-willstart make-white'>
-                        <h4>Quiz Will Start In</h4>
-                        <h5>{startHourRemaining}:{startMinRemaining}:{startSecondRemaining}</h5>
-                        <h4>Quiz Duration (hh:mm:ss)</h4>
-                        <h5>{duration}</h5>
+            <>
+                <Header />
+                <div className='quiz quiz-layout partition-container'>
+                    <div className='partition-container-left'>
+                        <img  alt='wait' className="partition-container-left-img" src={wait} />
+                    </div>
+                    <div className='partition-container-right'>
+                        <div className='quiz-willstart make-white'>
+                            <h4>Quiz Will Start In</h4>
+                            <h5>{startHourRemaining}:{startMinRemaining}:{startSecondRemaining}</h5>
+                            <h4>Quiz Duration (hh:mm:ss)</h4>
+                            <h5>{duration}</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
     else if(Date.now() > Date.parse(endTime)){
         return (
-            <div className='quiz quiz-layout partition-container'>
-                <div className='partition-container-left'>
-                    <img  alt='completed' className="partition-container-left-img" src={completed} />
-                </div>
-                <div className='partition-container-right'>
-                    <div className='quiz-willstart make-white'>
-                        <h4>Quiz Has Ended</h4>
-                        {showScore ? (
-                            <>
-                            {totalScore == -1 ? (
-                                <h5>Not Attempted</h5>
+            <>
+                <Header />
+                <div className='quiz quiz-layout partition-container'>
+                    <div className='partition-container-left'>
+                        <img  alt='completed' className="partition-container-left-img" src={completed} />
+                    </div>
+                    <div className='partition-container-right'>
+                        <div className='quiz-willstart make-white'>
+                            <h4>Quiz Has Ended</h4>
+                            {showScore ? (
+                                <>
+                                {totalScore == -1 ? (
+                                    <h5>Not Attempted</h5>
+                                ):(
+                                    <h5>Your Score: {totalScore}</h5>
+                                )}
+                                </>
                             ):(
-                                <h5>Your Score: {totalScore}</h5>
+                                <Button
+                                    className='customButton-outline'
+                                    onClick={() => calculateScore()}
+                                >
+                                    Fetch Score
+                                </Button>
                             )}
-                            </>
-                        ):(
-                            <Button
-                                className='customButton-outline'
-                                onClick={() => calculateScore()}
-                            >
-                                Fetch Score
-                            </Button>
-                        )}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
     else{
         return (
-            <div className='quiz quiz-layout partition-container'>
+            <>
+                <Header />
+                <div className='quiz quiz-layout partition-container'>
                 <div className='partition-container-left'>
                     <img  alt='wait' className="partition-container-left-img" src={wait} />
                 </div>
@@ -325,7 +359,8 @@ function Quiz(props) {
                     </div>
                 </div>
                 <ToastContainer />
-            </div>
+                </div>
+            </>
         )
     }
 }

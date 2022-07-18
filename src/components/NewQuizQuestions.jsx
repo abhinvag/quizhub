@@ -100,8 +100,10 @@ function NewQuizQuestions({quizQuestions, setQuizQuestions}) {
                         />
                         <Form.Control 
                             type="number"
+                            min="0"
                             placeholder='Marks'
                             name="marks"
+                            pattern="[0-9]+"
                             value={quizQuestions[key].marks}
                             className="createquiz-questions-inputs"
                             onChange={(event) => {

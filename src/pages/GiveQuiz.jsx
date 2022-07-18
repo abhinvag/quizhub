@@ -5,6 +5,7 @@ import Question from '../components/Question';
 import {Button} from "react-bootstrap"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import Header from '../components/Header';
 
 function GiveQuiz() {
 
@@ -40,7 +41,7 @@ function GiveQuiz() {
 
     const hourRemaining =  parseInt((Date.parse(quizEndTimeForUser)-Date.now())/(3600000))
     const minRemaining  = parseInt((Date.parse(quizEndTimeForUser)-Date.now())/(1000*60))-(hourRemaining*60);
-    const secondRemaining = parseInt(((Date.parse(quizEndTimeForUser)-Date.now())/1000)-(minRemaining*60))
+    const secondRemaining = parseInt(((Date.parse(quizEndTimeForUser)-Date.now())/1000)-(hourRemaining*60*60 + minRemaining*60))
 
     // console.log(
     //   "Hour", hourRemaining,
@@ -58,30 +59,33 @@ function GiveQuiz() {
     }
 
     return (
-      <div className='givequiz'>
-        <div className='givequiz-end make-white'>
-          <h4>Time Remaining</h4>
-          <h5>{hourRemaining}:{minRemaining}:{secondRemaining}</h5>
+      <>
+        <Header />
+        <div className='givequiz'>
+          <div className='givequiz-end make-white'>
+            <h4>Time Remaining</h4>
+            <h5>{hourRemaining}:{minRemaining}:{secondRemaining}</h5>
+          </div>
+          <div className='givequiz-questions'>
+            {Object.keys(quiz.quizQuestions).map((key, index) => (
+              <Question 
+                id={key}
+                question={quiz.quizQuestions[key]}
+              />
+            ))}
+          </div>
+          <div className='givequiz-finishButton'>
+            <Link to={`quiz/${quiz.id}`}>
+              <Button
+                className='customButton'
+              >
+                Finish
+              </Button>
+            </Link>
+          </div>
+          <ToastContainer />
         </div>
-        <div className='givequiz-questions'>
-          {Object.keys(quiz.quizQuestions).map((key, index) => (
-            <Question 
-              id={key}
-              question={quiz.quizQuestions[key]}
-            />
-          ))}
-        </div>
-        <div className='givequiz-finishButton'>
-          <Link to={`quiz/${quiz.id}`}>
-            <Button
-              className='customButton'
-            >
-              Finish
-            </Button>
-          </Link>
-        </div>
-        <ToastContainer />
-      </div>
+      </>
     )
 
 }

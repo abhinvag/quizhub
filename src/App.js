@@ -8,7 +8,7 @@ import {
 
 import HomePage from "./pages/HomePage";
 import Admin from "./pages/Admin";
-import Header from "./components/Header";
+//import Header from "./components/Header";
 import CreateQuiz from "./pages/CreateQuiz";
 import Quiz from "./pages/Quiz";
 import GiveQuiz from "./pages/GiveQuiz";
@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Header />
+        {/* <Header /> */}
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/admin" component={Admin} />

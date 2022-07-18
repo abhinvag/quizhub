@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import {nanoid} from "nanoid";
 import axios from "axios";
+import Header from '../components/Header';
 
 function CreateQuiz(props) {
 
@@ -51,7 +52,7 @@ function CreateQuiz(props) {
         }
         else{
             var temp = quizDetails.duration.split(":")
-            if(temp.length < 3 || temp[0].length != 2 || temp[2].length != 2 || temp[2].length != 2){
+            if(temp.length < 3 || temp[0].length != 2 || temp[1].length != 2 || temp[2].length != 2){
                 toast.error("Duration Format Incorrect !!")
             }
             else{
@@ -100,26 +101,29 @@ function CreateQuiz(props) {
     }
 
     return (
-        <div className='createquiz'>
-            <h1 className='createquiz-heading'>Create Quiz</h1>
-            <div className='createquiz-action-div make-white'>
-                <NewQuizDetails 
-                    quizDetails={quizDetails}
-                    setQuizDetails={setQuizDetails}
-                />
-                <NewQuizQuestions 
-                    quizQuestions={quizQuestions}
-                    setQuizQuestions={setQuizQuestions}
-                />
-                <Button
-                    className="customButton createquiz-button"
-                    onClick={() => handleQuizCreate()}
-                >
-                    Create <BiRocket />
-                </Button>
+        <>
+            <Header />
+            <div className='createquiz'>
+                <h1 className='createquiz-heading'>Create Quiz</h1>
+                <div className='createquiz-action-div make-white'>
+                    <NewQuizDetails 
+                        quizDetails={quizDetails}
+                        setQuizDetails={setQuizDetails}
+                    />
+                    <NewQuizQuestions 
+                        quizQuestions={quizQuestions}
+                        setQuizQuestions={setQuizQuestions}
+                    />
+                    <Button
+                        className="customButton createquiz-button"
+                        onClick={() => handleQuizCreate()}
+                    >
+                        Create <BiRocket />
+                    </Button>
+                </div>
+                <ToastContainer />
             </div>
-            <ToastContainer />
-        </div>
+        </>
     )
 
 }

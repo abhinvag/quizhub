@@ -26,7 +26,7 @@ function Header() {
         if(user != "undefined" && user != null){
             user = JSON.parse(user);
             const now = Date.now();
-            console.log((user.stsTokenManager.expirationTime-now)/60);
+            console.log((user.stsTokenManager.expirationTime-now)/60000);
             if(now <= user.stsTokenManager.expirationTime){
                 setRedirect(true);
             }
