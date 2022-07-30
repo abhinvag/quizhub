@@ -1,13 +1,13 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Moment from 'react-moment';
 import wait from "../assets/wait.svg"
 import completed from "../assets/completed.svg"
-import {Button, Form} from "react-bootstrap"
-import {GrFormNextLink} from "react-icons/gr"
+import { Button, Form } from "react-bootstrap"
+import { GrFormNextLink } from "react-icons/gr"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import {nanoid} from "nanoid";
-import {Redirect} from "react-router-dom";
+import { nanoid } from "nanoid";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -33,15 +33,15 @@ function Quiz(props) {
 
     useEffect(() => {
 
-        async function fetchData(){
-            try{
+        async function fetchData() {
+            try {
                 let res = await axios.post(`https://quizhub-api.herokuapp.com/questions`, {
                     quiz_id: props.match.params.id
                 })
                 console.log(res.data);
-                if(res.data.quizDetails !== null){
+                if (res.data.quizDetails !== null) {
                     const tempq = {
-                        id:props.match.params.id,
+                        id: props.match.params.id,
                         quizDetails: res.data.quizDetails,
                         quizQuestions: res.data.quizQuestions
                     }
@@ -51,14 +51,14 @@ function Quiz(props) {
                     setDuration(res.data.quizDetails.duration);
                     localStorage.setItem("quiz", JSON.stringify(tempq));
                 }
-                else{
+                else {
                     toast.error("Invalid Quiz ID");
                     setEndTime(new Date());
                 }
 
                 setLoading(false);
             }
-            catch(e){
+            catch (e) {
                 console.log(e);
             }
         }
@@ -66,7 +66,7 @@ function Quiz(props) {
         fetchData();
 
         const interval = setInterval(() => {
-            setCounter(prev => prev+1)
+            setCounter(prev => prev + 1)
         }, 1000)
 
         return () => clearInterval(interval);
@@ -75,10 +75,10 @@ function Quiz(props) {
 
     const verifyEmail = () => {
         var idx = quiz.quizDetails.invitedEmails.indexOf(userName);
-        if(idx == -1){
+        if (idx == -1) {
             toast.error("You Are Not Allowed To Attend This Quiz !!");
         }
-        else{
+        else {
             // TODO: SEND OTP  - setSendedOtp
             //setShowOTPBox(true);
             toast.info("Feature In Development");
@@ -88,22 +88,22 @@ function Quiz(props) {
     //console.log(counter);
 
     const verifyOTP = () => {
-        if(otp == sendedOtp){
+        if (otp == sendedOtp) {
             setShowQuestion(true)
         }
-        else{
+        else {
             toast.error("OTP Invalid");
         }
     }
 
     const calculateScore = async () => {
         let user = localStorage.getItem("quizgiver");
-        if(user != undefined && user != null){
+        if (user != undefined && user != null) {
             user = JSON.parse(user);
             console.log(user);
             console.log(quiz.id);
             console.log(user.prevQuizes[quiz.id]);
-            if(user.prevQuizes[quiz.id] != undefined){
+            if (user.prevQuizes[quiz.id] != undefined) {
                 console.log(user);
                 try {
                     const obj = {
@@ -113,7 +113,7 @@ function Quiz(props) {
                     console.log(obj);
                     const res = await axios.post("https://quizhub-api.herokuapp.com/score", obj);
                     console.log(res.data);
-                    if(res.data.success === true){
+                    if (res.data.success === true) {
                         setTotalScore(res.data.score);
                         setShowScore(true);
                     }
@@ -122,29 +122,33 @@ function Quiz(props) {
                     console.log(error);
                 }
             }
-            else{
+            else {
                 setTotalScore(-1);
                 setShowScore(true);
             }
         }
+        else {
+            setTotalScore(-1);
+            setShowScore(true);
+        }
     }
 
-    const startHourRemaining =  parseInt((Date.parse(startTime)-Date.now())/(3600000))
-    const startMinRemaining  = parseInt((Date.parse(startTime)-Date.now())/(1000*60))-(startHourRemaining*60);
-    const startSecondRemaining = parseInt(((Date.parse(startTime)-Date.now())/1000)-(startHourRemaining*60*60 + startMinRemaining*60))
+    const startHourRemaining = parseInt((Date.parse(startTime) - Date.now()) / (3600000))
+    const startMinRemaining = parseInt((Date.parse(startTime) - Date.now()) / (1000 * 60)) - (startHourRemaining * 60);
+    const startSecondRemaining = parseInt(((Date.parse(startTime) - Date.now()) / 1000) - (startHourRemaining * 60 * 60 + startMinRemaining * 60))
 
-    const endHourRemaining =  parseInt((Date.parse(endTime)-Date.now())/(3600000))
-    const endMinRemaining  = parseInt((Date.parse(endTime)-Date.now())/(1000*60))-(endHourRemaining*60);
-    const endSecondRemaining = parseInt(((Date.parse(endTime)-Date.now())/1000)-(endHourRemaining*60*60 + endMinRemaining*60))
-   
+    const endHourRemaining = parseInt((Date.parse(endTime) - Date.now()) / (3600000))
+    const endMinRemaining = parseInt((Date.parse(endTime) - Date.now()) / (1000 * 60)) - (endHourRemaining * 60);
+    const endSecondRemaining = parseInt(((Date.parse(endTime) - Date.now()) / 1000) - (endHourRemaining * 60 * 60 + endMinRemaining * 60))
 
-    if(loading){
+
+    if (loading) {
         return (
             <>
                 <Header />
                 <div className='quiz quiz-layout partition-container'>
                     <div className='partition-container-left'>
-                        <img  alt='wait' className="partition-container-left-img" src={wait} />
+                        <img alt='wait' className="partition-container-left-img" src={wait} />
                     </div>
                     <div className='partition-container-right'>
                         <div className='quiz-willstart make-white'>
@@ -156,53 +160,53 @@ function Quiz(props) {
         )
     }
 
-    if(showQuestion){
+    if (showQuestion) {
 
         let user;
 
         user = localStorage.getItem("quizgiver");
 
-        if(user !== "undefined" && user !== null){
+        if (user !== "undefined" && user !== null) {
             user = JSON.parse(user);
-            if(user.quizid != quiz.id){
-                if(user.prevQuizes[quiz.id] != undefined){ // we have previous end time
+            if (user.quizid != quiz.id) {
+                if (user.prevQuizes[quiz.id] != undefined) { // we have previous end time
                     user = {
                         id: user.id,
                         name: userName,
                         quizid: quiz.id,
-                        prevQuizes:user.prevQuizes,
+                        prevQuizes: user.prevQuizes,
                         quizEndTimeForUser: user.prevQuizes[quiz.id]
                     }
                 }
-                else{ // we do not have previous end time, calculating new 
+                else { // we do not have previous end time, calculating new 
                     const d = duration.split(":");
-                    const dInMs = d[0]*3600000 + d[1]*60000 + d[2]*1000;
-                    const quizEndTimeForUser = new Date(Math.min(Date.now()+dInMs, Date.parse(endTime)));
+                    const dInMs = d[0] * 3600000 + d[1] * 60000 + d[2] * 1000;
+                    const quizEndTimeForUser = new Date(Math.min(Date.now() + dInMs, Date.parse(endTime)));
                     user.prevQuizes[quiz.id] = quizEndTimeForUser;
                     user = {
                         id: user.id,
                         name: userName,
                         quizid: quiz.id,
-                        prevQuizes:user.prevQuizes,
-                        quizEndTimeForUser:quizEndTimeForUser
+                        prevQuizes: user.prevQuizes,
+                        quizEndTimeForUser: quizEndTimeForUser
                     }
                 }
                 localStorage.setItem("quizgiver", JSON.stringify(user));
             }
         }
-        else{
+        else {
             // we do not have any user info
             const d = duration.split(":");
-            const dInMs = d[0]*3600000 + d[1]*60000 + d[2]*1000;
-            const quizEndTimeForUser = new Date(Math.min(Date.now()+dInMs, Date.parse(endTime)));
+            const dInMs = d[0] * 3600000 + d[1] * 60000 + d[2] * 1000;
+            const quizEndTimeForUser = new Date(Math.min(Date.now() + dInMs, Date.parse(endTime)));
             let prevQuizes = {};
-            prevQuizes[quiz.id]=quizEndTimeForUser
+            prevQuizes[quiz.id] = quizEndTimeForUser
             user = {
                 id: nanoid(),
                 name: userName,
                 quizid: quiz.id,
-                prevQuizes:prevQuizes,
-                quizEndTimeForUser:quizEndTimeForUser
+                prevQuizes: prevQuizes,
+                quizEndTimeForUser: quizEndTimeForUser
             }
             localStorage.setItem("quizgiver", JSON.stringify(user));
         }
@@ -210,13 +214,13 @@ function Quiz(props) {
         return <Redirect to="/givequiz" />
 
     }
-    else if(Date.now() < Date.parse(startTime)){
+    else if (Date.now() < Date.parse(startTime)) {
         return (
             <>
                 <Header />
                 <div className='quiz quiz-layout partition-container'>
                     <div className='partition-container-left'>
-                        <img  alt='wait' className="partition-container-left-img" src={wait} />
+                        <img alt='wait' className="partition-container-left-img" src={wait} />
                     </div>
                     <div className='partition-container-right'>
                         <div className='quiz-willstart make-white'>
@@ -230,26 +234,26 @@ function Quiz(props) {
             </>
         )
     }
-    else if(Date.now() > Date.parse(endTime)){
+    else if (Date.now() > Date.parse(endTime)) {
         return (
             <>
                 <Header />
                 <div className='quiz quiz-layout partition-container'>
                     <div className='partition-container-left'>
-                        <img  alt='completed' className="partition-container-left-img" src={completed} />
+                        <img alt='completed' className="partition-container-left-img" src={completed} />
                     </div>
                     <div className='partition-container-right'>
                         <div className='quiz-willstart make-white'>
                             <h4>Quiz Has Ended</h4>
                             {showScore ? (
                                 <>
-                                {totalScore == -1 ? (
-                                    <h5>Not Attempted</h5>
-                                ):(
-                                    <h5>Your Score: {totalScore}</h5>
-                                )}
+                                    {totalScore == -1 ? (
+                                        <h5>Not Attempted</h5>
+                                    ) : (
+                                        <h5>Your Score: {totalScore}</h5>
+                                    )}
                                 </>
-                            ):(
+                            ) : (
                                 <Button
                                     className='customButton-outline'
                                     onClick={() => calculateScore()}
@@ -263,102 +267,102 @@ function Quiz(props) {
             </>
         )
     }
-    else{
+    else {
         return (
             <>
                 <Header />
                 <div className='quiz quiz-layout partition-container'>
-                <div className='partition-container-left'>
-                    <img  alt='wait' className="partition-container-left-img" src={wait} />
-                </div>
-                <div className='partition-container-right'>
-                    <div className='quiz-willstart make-white'>
-                        {start ? (
-                            <>
-                                {quiz.quizDetails.inviteOnly ? (
-                                    <>
-                                        {showOTPBox ? (
-                                            <>
-                                                <Form.Control 
-                                                    placeholder='Enter OTP'
-                                                    value={otp}
-                                                    name="otp"
-                                                    onChange={(event) => {
-                                                        setOtp(event.target.value);
-                                                    }}
-                                                    className='quiz-inputs'
-                                                    type="text"
-                                                />
-                                                <Button
-                                                    className="customButton"
-                                                    onClick={() => verifyOTP()}
-                                                >
-                                                    Enter
-                                                </Button>
-                                            </>
-                                        ): (
-                                            <>
-                                                <Form.Control 
-                                                    placeholder='Enter Your Email'
-                                                    value={userName}
-                                                    name="userName"
-                                                    onChange={(event) => {
-                                                        setUserName(event.target.value);
-                                                    }}
-                                                    className='quiz-inputs'
-                                                    type="email"
-                                                />
-                                                <Button
-                                                    className="customButton"
-                                                    onClick={() => verifyEmail()}
-                                                >
-                                                    Verify
-                                                </Button>
-                                            </>
-                                        )}
-                                    </>
-                                ):(
-                                    <>
-                                        <Form.Control 
-                                            placeholder='Enter Your Name'
-                                            value={userName}
-                                            name="userName"
-                                            onChange={(event) => {
-                                                setUserName(event.target.value);
-                                            }}
-                                            className='quiz-inputs'
-                                        />
-                                        <Button
-                                            variant="primary"
-                                            className="customButton"
-                                            onClick={() => {
-                                                setShowQuestion(true);
-                                            }}
-                                        >
-                                            Enter
-                                        </Button>
-                                    </>
-                                )}
-                            </>
-                        ):(
-                            <>
-                                <h4>Quiz Will End In</h4>
-                                <h5>{endHourRemaining}:{endMinRemaining}:{endSecondRemaining}</h5>
-                                <h4>Quiz Duration (hh:mm:ss)</h4>
-                                <h5>{duration}</h5>
-                                <Button
-                                    className="customButton"
-                                    onClick={() => {
-                                        setStart(true);
-                                    }}
-                                >
-                                    Start Quiz
-                                </Button>
-                            </>
-                        )}
+                    <div className='partition-container-left'>
+                        <img alt='wait' className="partition-container-left-img" src={wait} />
                     </div>
-                </div>
-                <ToastContainer />
+                    <div className='partition-container-right'>
+                        <div className='quiz-willstart make-white'>
+                            {start ? (
+                                <>
+                                    {quiz.quizDetails.inviteOnly ? (
+                                        <>
+                                            {showOTPBox ? (
+                                                <>
+                                                    <Form.Control
+                                                        placeholder='Enter OTP'
+                                                        value={otp}
+                                                        name="otp"
+                                                        onChange={(event) => {
+                                                            setOtp(event.target.value);
+                                                        }}
+                                                        className='quiz-inputs'
+                                                        type="text"
+                                                    />
+                                                    <Button
+                                                        className="customButton"
+                                                        onClick={() => verifyOTP()}
+                                                    >
+                                                        Enter
+                                                    </Button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Form.Control
+                                                        placeholder='Enter Your Email'
+                                                        value={userName}
+                                                        name="userName"
+                                                        onChange={(event) => {
+                                                            setUserName(event.target.value);
+                                                        }}
+                                                        className='quiz-inputs'
+                                                        type="email"
+                                                    />
+                                                    <Button
+                                                        className="customButton"
+                                                        onClick={() => verifyEmail()}
+                                                    >
+                                                        Verify
+                                                    </Button>
+                                                </>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Form.Control
+                                                placeholder='Enter Your Name'
+                                                value={userName}
+                                                name="userName"
+                                                onChange={(event) => {
+                                                    setUserName(event.target.value);
+                                                }}
+                                                className='quiz-inputs'
+                                            />
+                                            <Button
+                                                variant="primary"
+                                                className="customButton"
+                                                onClick={() => {
+                                                    setShowQuestion(true);
+                                                }}
+                                            >
+                                                Enter
+                                            </Button>
+                                        </>
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    <h4>Quiz Will End In</h4>
+                                    <h5>{endHourRemaining}:{endMinRemaining}:{endSecondRemaining}</h5>
+                                    <h4>Quiz Duration (hh:mm:ss)</h4>
+                                    <h5>{duration}</h5>
+                                    <Button
+                                        className="customButton"
+                                        onClick={() => {
+                                            setStart(true);
+                                        }}
+                                    >
+                                        Start Quiz
+                                    </Button>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                    <ToastContainer />
                 </div>
             </>
         )
