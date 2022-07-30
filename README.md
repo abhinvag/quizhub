@@ -3,7 +3,7 @@
 - QuizHub is a quick quiz taking and creating application
 - This project reached Top 12 among 3500+ submissions in Tally CodeBrew Hackathon 2022
 
-![HomeScreen](https://github.com/wraith-0/quizhub/blob/master/screenshots/homescreen.png)
+![HomeScreen](https://github.com/wraith-0/quizhub/blob/master/screenshots/homescreen.png?raw=true)
 
 ## Features
 
@@ -38,6 +38,16 @@ npm run dev
 - React
 - Sass
 - Bootstrap
+
+## Screen Shots
+
+|                                                                                                                                                         |                                                                                                                                              |
+| :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: |
+|        <img width="1604" alt="homescreen" src="https://github.com/wraith-0/quizhub/blob/master/screenshots/homescreen.png?raw=true"> Home Screen        | <img width="1604" alt="admindashboard" src="https://github.com/wraith-0/quizhub/blob/master/screenshots/admin.png?raw=true"> Admin Dashboard |
+|        <img width="1604" alt="createquiz" src="https://github.com/wraith-0/quizhub/blob/master/screenshots/createquiz.png?raw=true"> Create Quiz        | <img width="1604" alt="leaderborad" src="https://github.com/wraith-0/quizhub/blob/master/screenshots/leaderboard.png?raw=true"> LeaderBoard  |
+| <img width="1604" alt="previousquizzes" src="https://github.com/wraith-0/quizhub/blob/master/screenshots/previousquizzes.png?raw=true">Previous Quizzes |   <img width="1604" alt="question" src="https://github.com/wraith-0/quizhub/blob/master/screenshots/question.png?raw=true"> Add Questions    |
+|               <img width="1604" alt="quiz" src="https://github.com/wraith-0/quizhub/blob/master/screenshots/quiz.png?raw=true"> Give Quiz               |    <img width="1604" alt="startQuiz" src="https://github.com/wraith-0/quizhub/blob/master/screenshots/startQuiz.png?raw=true"> Start Quiz    |
+|     <img width="1604" alt="homescreen" src="https://github.com/wraith-0/quizhub/blob/master/screenshots/waitingscreen.png?raw=true"> Waiting Window     |   <img width="1604" alt="homescreen" src="https://github.com/wraith-0/quizhub/blob/master/screenshots/quizended.png?raw=true"> View Score    |
 
 ## Link
 
